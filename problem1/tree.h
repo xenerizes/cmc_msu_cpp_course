@@ -5,6 +5,7 @@
 namespace bintree {
     template <typename T>
     struct TNode 
+        // See comments below
         : std::enable_shared_from_this<TNode<T>> 
     {
         using TNodePtr = std::shared_ptr<TNode<T>>;
@@ -20,6 +21,7 @@ namespace bintree {
         }
 
         bool hasParent() const {
+            // Parent is now of type TNodeWeakPtr 
             return !parent.expired();
         }
 
@@ -48,25 +50,36 @@ namespace bintree {
         }
 
         TNodePtr getParent() {
+            // Parent is now of type TNodeWeakPtr 
             return parent.lock();
         }
 
         TNodeConstPtr getParent() const {
+            // Parent is now of type TNodeWeakPtr 
             return parent.lock();
         }
 
         static TNodePtr createLeaf(T v) {
-            return std::allocate_shared<TNode>(TNodeAllocator<>(),v);
+            // Constructor is private, make_shared does not see it. 
+            // If we create custom allocator in the class and call 
+            // constructor there, allocate_shared will work
+            return std::allocate_shared<TNode>(TNodeAllocator<>(), v);
         }
 
+        // Replaced raw pointers with smart ones to count references correctly
         static TNodePtr fork(T v, TNodePtr left, TNodePtr right) {
-            TNodePtr ptr = std::allocate_shared<TNode>(TNodeAllocator<>(),v, left, right);
+            // Same as in createLeaf
+            TNodePtr ptr = 
+                std::allocate_shared<TNode>(TNodeAllocator<>(),v, left, right);
             setParent(ptr->getLeft(), ptr);
             setParent(ptr->getRight(), ptr);
             return ptr;
         }
 
         TNodePtr replaceLeft(TNodePtr l) {
+            // All pointers created from concrete TNode using this does not know
+            // about each other. Enable_shared_from_this counts created pointers
+            // and fixes the situation 
             setParent(l, this->shared_from_this());
             setParent(left, nullptr);
             std::swap(l, left);
@@ -74,6 +87,7 @@ namespace bintree {
         }
 
         TNodePtr replaceRight(TNodePtr r) {
+            // See replaceLeft
             setParent(r, this->shared_from_this());
             setParent(right, nullptr);
             std::swap(r, right);
@@ -99,8 +113,10 @@ namespace bintree {
         T value;
         TNodePtr left = nullptr;
         TNodePtr right = nullptr;
+        // Required to break circular dependencies to nodes
         TNodeWeakPtr parent;
 
+        // Allocator which is aware of private constructors 
         template<class U = TNode>
         struct TNodeAllocator {
             using value_type = U;
@@ -122,6 +138,7 @@ namespace bintree {
 
             template<class... Args>
             static void construct(pointer p, Args&&... args) {
+                // Calls replacement new and suitable constructor
                 ::new((void *)p) value_type(std::forward<Args>(args)...);
             }
 
@@ -141,6 +158,7 @@ namespace bintree {
         {
         }
 
+        // Replaced raw pointers with smart ones to avoid double free
         static void setParent(TNodePtr node, TNodePtr parent) {
             if (node)
                 node->parent = parent;
