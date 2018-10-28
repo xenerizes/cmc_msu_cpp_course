@@ -53,11 +53,11 @@ namespace bintree {
         }
 
         static TNodePtr createLeaf(T v) {
-            return std::make_shared<TNode>(v);
+            return std::allocate_shared<TNode>(TNodeAllocator<>(),v);
         }
 
         static TNodePtr fork(T v, TNode* left, TNode* right) {
-            TNodePtr ptr = std::make_shared<TNode>(v, left, right);
+            TNodePtr ptr = std::allocate_shared<TNode>(TNodeAllocator<>(),v, left, right);
             setParent(ptr->getLeft(), ptr);
             setParent(ptr->getRight(), ptr);
             return ptr;
@@ -97,6 +97,35 @@ namespace bintree {
         TNodePtr left = nullptr;
         TNodePtr right = nullptr;
         TNodePtr parent = nullptr;
+
+        template<class U = TNode>
+        struct TNodeAllocator {
+            using value_type = U;
+            using pointer = U*;
+
+            TNodeAllocator() noexcept = default;
+            template<class W>
+            TNodeAllocator(const TNodeAllocator<W>&) {}
+
+            static pointer allocate(std::size_t n) {
+                auto mem = ::operator new(n * sizeof(value_type));
+                return static_cast<pointer>(mem);
+            }
+
+            static void deallocate(pointer p, std::size_t n) {
+                auto mem = static_cast<void*>(p);
+                ::operator delete(mem);
+            }
+
+            template<class... Args>
+            static void construct(pointer p, Args&&... args) {
+                ::new((void *)p) value_type(std::forward<Args>(args)...);
+            }
+
+            static void destroy(pointer p) {
+                p->~U();
+            }
+        };
 
         TNode(T v)
             : value(v)
