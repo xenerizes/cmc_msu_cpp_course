@@ -20,7 +20,7 @@ namespace bintree {
         }
 
         bool hasParent() const {
-            return bool(parent);
+            return !parent.expired();
         }
 
         T& getValue() {
