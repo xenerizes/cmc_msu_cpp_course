@@ -9,6 +9,7 @@ namespace bintree {
     {
         using TNodePtr = std::shared_ptr<TNode<T>>;
         using TNodeConstPtr = std::shared_ptr<const TNode<T>>;
+        using TNodeWeakPtr = std::weak_ptr<TNode<T>>;
 
         bool hasLeft() const {
             return bool(left);
@@ -47,11 +48,11 @@ namespace bintree {
         }
 
         TNodePtr getParent() {
-            return parent;
+            return parent.lock();
         }
 
         TNodeConstPtr getParent() const {
-            return parent;
+            return parent.lock();
         }
 
         static TNodePtr createLeaf(T v) {
@@ -98,7 +99,7 @@ namespace bintree {
         T value;
         TNodePtr left = nullptr;
         TNodePtr right = nullptr;
-        TNodePtr parent = nullptr;
+        TNodeWeakPtr parent;
 
         template<class U = TNode>
         struct TNodeAllocator {
