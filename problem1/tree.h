@@ -59,7 +59,7 @@ namespace bintree {
             return std::allocate_shared<TNode>(TNodeAllocator<>(),v);
         }
 
-        static TNodePtr fork(T v, TNode* left, TNode* right) {
+        static TNodePtr fork(T v, TNodePtr left, TNodePtr right) {
             TNodePtr ptr = std::allocate_shared<TNode>(TNodeAllocator<>(),v, left, right);
             setParent(ptr->getLeft(), ptr);
             setParent(ptr->getRight(), ptr);
@@ -134,7 +134,7 @@ namespace bintree {
             : value(v)
         {
         }
-        TNode(T v, TNode* left, TNode* right)
+        TNode(T v, TNodePtr left, TNodePtr right)
             : value(v)
             , left(left)
             , right(right)
