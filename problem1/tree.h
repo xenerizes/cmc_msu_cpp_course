@@ -4,7 +4,9 @@
 
 namespace bintree {
     template <typename T>
-    struct TNode {
+    struct TNode 
+        : std::enable_shared_from_this<TNode<T>> 
+    {
         using TNodePtr = std::shared_ptr<TNode<T>>;
         using TNodeConstPtr = std::shared_ptr<const TNode<T>>;
 
@@ -64,14 +66,14 @@ namespace bintree {
         }
 
         TNodePtr replaceLeft(TNodePtr l) {
-            setParent(l, TNodePtr(this));
+            setParent(l, this->shared_from_this());
             setParent(left, nullptr);
             std::swap(l, left);
             return l;
         }
 
         TNodePtr replaceRight(TNodePtr r) {
-            setParent(r, TNodePtr(this));
+            setParent(r, this->shared_from_this());
             setParent(right, nullptr);
             std::swap(r, right);
             return r;
