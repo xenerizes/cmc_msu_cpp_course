@@ -3,10 +3,10 @@
 #include "geometric.h"
 #include "poisson.h"
 #include "distribution_factory.h"
-
-#include <cassert>
+#include "assertions.h"
 
 int main()
 {
+    TRandomGeneratorFactory gfactory;
     return 0;
 }

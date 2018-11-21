@@ -8,4 +8,4 @@ public:
     virtual double Generate() const = 0;
 };
 
-using TRandomNumberGeneratorPtr = std::unique_ptr<TRandomNumberGenerator>;
+using TRandomGeneratorPtr = std::unique_ptr<TRandomNumberGenerator>;

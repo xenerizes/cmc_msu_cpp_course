@@ -6,6 +6,8 @@ set(CXX_FLAGS "-Wall -Wextra")
 
 include_directories(include)
 
-add_executable(problem2 main.cpp
+add_executable(problem2
+    main.cpp
+    src/distribution_factory.cpp
     src/bernoulli.cpp)
 
