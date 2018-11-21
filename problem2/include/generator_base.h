@@ -4,7 +4,7 @@
 
 class TRandomNumberGenerator {
 public:
-    virtual ~TRandomNumberGenerator();
+    virtual ~TRandomNumberGenerator() = default;
     virtual double Generate() const = 0;
 };
 
