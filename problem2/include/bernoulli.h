@@ -16,5 +16,5 @@ public:
 
 private:
     unsigned p;
-    mutable utility::generator_holder impl;
+    utility::generator_holder impl;
 };
