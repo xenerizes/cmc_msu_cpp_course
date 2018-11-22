@@ -2,10 +2,12 @@
 
 #include <memory>
 
-class TRandomNumberGenerator {
+class IRandomNumberGenerator {
 public:
-    virtual ~TRandomNumberGenerator() = default;
+    class IOptions { };
+
+    virtual ~IRandomNumberGenerator() = default;
     virtual double Generate() const = 0;
 };
 
-using TRandomGeneratorPtr = std::unique_ptr<TRandomNumberGenerator>;
+using TRandomGeneratorPtr = std::unique_ptr<IRandomNumberGenerator>;

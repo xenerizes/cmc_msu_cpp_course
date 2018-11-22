@@ -5,7 +5,7 @@
 #include <random>
 
 class TBernoulliGenerator 
-    : public TRandomNumberGenerator
+    : public IRandomNumberGenerator
 {
 public:
     TBernoulliGenerator() = delete;

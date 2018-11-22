@@ -3,5 +3,5 @@
 #include "generator_base.h"
 
 class TGeometricGenerator
-    : public TRandomNumberGenerator
+    : public IRandomNumberGenerator
 { };
