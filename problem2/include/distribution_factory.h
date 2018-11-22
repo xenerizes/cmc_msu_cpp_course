@@ -9,7 +9,10 @@ public:
     ~TRandomGeneratorFactory();
 
     template<class... Args>
-    TRandomGeneratorPtr CreateGenerator(const std::string& name, Args&&...) const;
+    TRandomGeneratorPtr CreateGenerator(const std::string& name, Args&&...) const
+    {
+        return nullptr;
+    }
 
 private:
     struct implementation;

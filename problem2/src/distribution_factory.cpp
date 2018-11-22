@@ -6,13 +6,6 @@ TRandomGeneratorFactory::TRandomGeneratorFactory()
 
 TRandomGeneratorFactory::~TRandomGeneratorFactory() { };
 
-template<class... Args>
-TRandomGeneratorPtr
-TRandomGeneratorFactory::CreateGenerator(const std::string& name, Args&&... args) const
-{
-    return nullptr;
-}
-
 struct TRandomGeneratorFactory::implementation {
     class ITGeneratorCreator {
     public:
