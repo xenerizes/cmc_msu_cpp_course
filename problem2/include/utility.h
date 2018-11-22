@@ -17,7 +17,7 @@ private:
     static constexpr int bits = 16;
 };
 
-inline bool is_probability(unsigned p)
+inline bool is_probability(double p)
 {
     return 0 <= p && p <= 1;
 }

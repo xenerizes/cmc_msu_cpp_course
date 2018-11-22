@@ -2,19 +2,19 @@
 
 #include "generator_base.h"
 #include "utility.h"
+#include "options.h"
 #include <random>
 
 class TBernoulliGenerator 
     : public IRandomNumberGenerator
 {
 public:
-    TBernoulliGenerator() = delete;
-    explicit TBernoulliGenerator(unsigned p);
-    ~TBernoulliGenerator() = default;
+    explicit TBernoulliGenerator(double p);
+    explicit TBernoulliGenerator(const TOptions& opts);
 
     double Generate() const override;
 
 private:
-    unsigned p;
+    double p;
     utility::generator_holder impl;
 };

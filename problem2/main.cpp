@@ -7,8 +7,8 @@
 
 int main()
 {
-    auto gfactory = IRandomGeneratorFactory::Create();
-    ASSERT_STD_EXCEPTION(gfactory->CreateGenerator("bernoulli", 5));
-    ASSERT_NO_EXCEPTION(gfactory->CreateGenerator("bernoulli", 0.5));
+    TRandomGeneratorFactory gfactory;
+    ASSERT_STD_EXCEPTION(gfactory.CreateGenerator("bernoulli", 5.3));
+    ASSERT_NO_EXCEPTION(gfactory.CreateGenerator("bernoulli", 0.5));
     return 0;
 }
