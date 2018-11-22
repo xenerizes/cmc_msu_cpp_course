@@ -7,6 +7,8 @@
 
 int main()
 {
-    TRandomGeneratorFactory gfactory;
+    auto gfactory = IRandomGeneratorFactory::Create();
+    ASSERT_STD_EXCEPTION(gfactory->CreateGenerator("bernoulli", 5));
+    ASSERT_NO_EXCEPTION(gfactory->CreateGenerator("bernoulli", 0.5));
     return 0;
 }

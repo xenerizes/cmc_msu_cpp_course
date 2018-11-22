@@ -3,18 +3,11 @@
 #include "generator_base.h"
 #include <string>
 
-class TRandomGeneratorFactory {
+class IRandomGeneratorFactory {
 public:
-    TRandomGeneratorFactory();
-    ~TRandomGeneratorFactory();
+    static std::shared_ptr<IRandomGeneratorFactory> Create();
 
-    template<class... Args>
-    TRandomGeneratorPtr CreateGenerator(const std::string& name, Args&&...) const
-    {
-        return nullptr;
-    }
+    virtual ~IRandomGeneratorFactory() { }
 
-private:
-    struct implementation;
-    std::unique_ptr<implementation> pImpl;
+    virtual TRandomGeneratorPtr CreateGenerator(const std::string& name, unsigned p) const = 0;
 };
