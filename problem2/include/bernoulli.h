@@ -17,5 +17,5 @@ public:
 
 private:
     double p;
-    utility::generator_holder impl;
+    utility::distribution_holder<std::bernoulli_distribution> impl;
 };

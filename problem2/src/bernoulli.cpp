@@ -13,7 +13,7 @@ TBernoulliGenerator::TBernoulliGenerator(const TOptions& opts)
 
 double TBernoulliGenerator::Generate() const
 {
-    return impl.random() < p ? 0.0 : 1.0;
+    return impl.random();
 }
 
 double TBernoulliGenerator::Mean() const
