@@ -1,5 +1,4 @@
 #include "bernoulli.h"
-#include <utility.h>
 
 TBernoulliGenerator::TBernoulliGenerator(double prob)
     : p(prob)
@@ -14,5 +13,5 @@ TBernoulliGenerator::TBernoulliGenerator(const TOptions& opts)
 
 double TBernoulliGenerator::Generate() const
 {
-    return utility::generator_holder::random() < p ? 0.0 : 1.0;
+    return impl.random() < p ? 0.0 : 1.0;
 }
