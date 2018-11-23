@@ -41,4 +41,9 @@ inline bool is_probability(double p)
     return 0 <= p && p <= 1;
 }
 
+inline bool compare_with_eps(double lhs, double rhs, double eps)
+{
+    return std::abs(std::abs(lhs) - std::abs(rhs)) < eps;
+}
+
 }
