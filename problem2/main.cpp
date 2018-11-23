@@ -25,23 +25,23 @@ int main()
     IRandomGeneratorSharedPtr bernoulli1 = gfactory.CreateGenerator("bernoulli", 0.15);
     IRandomGeneratorSharedPtr bernoulli2 = gfactory.CreateGenerator("bernoulli", 0.79);
     IRandomGeneratorSharedPtr bernoulli3 = gfactory.CreateGenerator("bernoulli", 0.22);
-    assert(compare_means(bernoulli1));
-    assert(compare_means(bernoulli2));
-    assert(compare_means(bernoulli3));
+    compare_means(bernoulli1);
+    compare_means(bernoulli2);
+    compare_means(bernoulli3);
 
     IRandomGeneratorSharedPtr poisson1 = gfactory.CreateGenerator("poisson", 30.1);
     IRandomGeneratorSharedPtr poisson2 = gfactory.CreateGenerator("poisson", 4.2);
     IRandomGeneratorSharedPtr poisson3 = gfactory.CreateGenerator("poisson", 11.984);
-    assert(compare_means(poisson1));
-    assert(compare_means(poisson2));
-    assert(compare_means(poisson3));
+    compare_means(poisson1);
+    compare_means(poisson2);
+    compare_means(poisson3);
 
     IRandomGeneratorSharedPtr geometric1 = gfactory.CreateGenerator("geometric", 0.15);
     IRandomGeneratorSharedPtr geometric2 = gfactory.CreateGenerator("geometric", 0.422);
     IRandomGeneratorSharedPtr geometric3 = gfactory.CreateGenerator("geometric", 0.998);
-    assert(compare_means(geometric1));
-    assert(compare_means(geometric2));
-    assert(compare_means(geometric3));
+    compare_means(geometric1);
+    compare_means(geometric2);
+    compare_means(geometric3);
 
     IRandomGeneratorSharedPtr finite1
         = gfactory.CreateGenerator("finite",
@@ -55,9 +55,9 @@ int main()
         = gfactory.CreateGenerator("finite",
                                    TVec{1, 2, 3, 4, 5},
                                    TVec{0.2, 0.2, 0.2, 0.2, 0.2});
-    assert(compare_means(finite1));
-    assert(compare_means(finite2));
-    assert(compare_means(finite3));
+    compare_means(finite1);
+    compare_means(finite2);
+    compare_means(finite3);
 
     return 0;
 }
