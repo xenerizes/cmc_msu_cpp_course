@@ -8,5 +8,7 @@ include_directories(include)
 add_executable(problem2
     main.cpp
     src/distribution_factory.cpp
-    src/bernoulli.cpp src/poisson.cpp)
+    src/bernoulli.cpp
+    src/poisson.cpp
+    src/geometric.cpp)
 
