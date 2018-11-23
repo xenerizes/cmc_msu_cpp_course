@@ -10,5 +10,6 @@ add_executable(problem2
     src/distribution_factory.cpp
     src/bernoulli.cpp
     src/poisson.cpp
-    src/geometric.cpp)
+    src/geometric.cpp
+    src/finite.cpp)
 
