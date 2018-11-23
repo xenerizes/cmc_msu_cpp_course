@@ -5,10 +5,10 @@
 #include <stdexcept>
 
 struct TOptions {
-    template<class... Args>
-    TOptions(Args&&... args)
+    template<class TArg>
+    TOptions(std::initializer_list<TArg> il)
     {
-        options.emplace_back(std::make_any<Args...>(args)...);
+        options.insert(options.begin(), il.begin(), il.end());
     }
 
     template<class T, unsigned I>
