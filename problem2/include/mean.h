@@ -6,8 +6,8 @@
 
 namespace utility {
 
-static constexpr int observations = 100;
-static constexpr double mean_error = 1e-5;
+static constexpr int observations = 1000;
+static constexpr double mean_error = 1.0;
 
 template<class Gen>
 double empirical_mean(const std::shared_ptr<Gen> gen)
