@@ -12,7 +12,9 @@ public:
     TGeometricGenerator(const TOptions& opts);
 
     double Generate() const override;
+    double Mean() const override;
 
 private:
+    double p;
     utility::distribution_holder<std::geometric_distribution<>> impl;
 };

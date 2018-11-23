@@ -23,3 +23,13 @@ double TFiniteGenerator::Generate() const
     auto index = impl.random();
     return values[index];
 }
+
+double TFiniteGenerator::Mean() const
+{
+    double mean = 0;
+    for (size_t i = 0; i < values.size(); ++i) {
+        mean += values[i] * probas [i];
+    }
+
+    return mean;
+}

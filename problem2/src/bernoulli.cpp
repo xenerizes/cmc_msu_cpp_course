@@ -15,3 +15,8 @@ double TBernoulliGenerator::Generate() const
 {
     return impl.random() < p ? 0.0 : 1.0;
 }
+
+double TBernoulliGenerator::Mean() const
+{
+    return p;
+}

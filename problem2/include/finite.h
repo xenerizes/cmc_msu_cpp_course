@@ -15,6 +15,7 @@ public:
     TFiniteGenerator(const TOptions& opts);
 
     double Generate() const override;
+    double Mean() const override;
 
 private:
     TVec values;

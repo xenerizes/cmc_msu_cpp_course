@@ -12,6 +12,7 @@ public:
     TPoissonGenerator(const TOptions& opts);
 
     double Generate() const override;
+    double Mean() const override;
 
 private:
     double lambda;

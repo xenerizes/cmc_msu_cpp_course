@@ -16,3 +16,8 @@ double TPoissonGenerator::Generate() const
 {
     return impl.random();
 }
+
+double TPoissonGenerator::Mean() const
+{
+    return lambda;
+}
