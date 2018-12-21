@@ -14,6 +14,10 @@ TEST(IProductTest, PriceTest) {
     FakeProduct p(100.0);
 
     ASSERT_DOUBLE_EQ(100.0, p.GetPrice());
+
+    p.ChangePrice(200.0);
+
+    ASSERT_DOUBLE_EQ(200.0, p.GetPrice());
 }
 
 }

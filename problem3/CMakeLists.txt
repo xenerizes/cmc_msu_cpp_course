@@ -7,7 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIERD ON)
 include_directories(include)
 
 add_executable(task1 task1.cpp)
-add_executable(task2 task2.cpp)
+add_executable(task2
+    task2.cpp
+    src/IProduct.cpp)
 
 target_link_libraries(task1 pthread) 
 target_link_libraries(task2 pthread gtest)

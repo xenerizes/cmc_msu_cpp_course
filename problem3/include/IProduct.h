@@ -2,9 +2,9 @@
 
 class IProduct {
 public:
-    IProduct(double p) : _price(p) { }
-
-    double GetPrice() const { return _price; } 
+    IProduct(double p) noexcept;
+    double GetPrice() const;
+    void ChangePrice(double p);
 
 private:
     double _price;
