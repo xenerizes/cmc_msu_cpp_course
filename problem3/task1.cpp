@@ -1,27 +1,35 @@
 #include <iostream>
 #include <thread>
 #include <queue>
+#include <atomic>
+#include <mutex>
+
+using lock_t = std::lock_guard<std::mutex>;
 
 int main() {
-    size_t count = 0;
-    bool done = false;
+    std::atomic<size_t> count { 0 };
+    std::atomic<bool> done { false };
+    std::mutex qmutex;
     std::queue<int> items;
+
     std::thread producer([&]() {
         for (int i = 0; i < 10000; ++i) {
-        // ... some code may be here ...
+            // ... some code may be here ...
+            lock_t lck(qmutex);
             items.push(i);
             count++;
         }
-        done = true;
+        done.store(true);
     });
 
     std::thread consumer([&]() {
-        while (!done) {
-        while (!items.empty()) {
-            items.pop();
-            // ...
-            count--;
-        }
+        while (!done.load()) {
+            lock_t lck(qmutex);
+            while (!items.empty()) {
+                items.pop();
+                // ...
+                count--;
+            }
         }
     });
 
