@@ -19,6 +19,7 @@ public:
     void StartSales();
 
 protected:
+    bool _sales;
     double _price;
     std::string _name;
     std::vector< IShopWeakPtr > _shops;

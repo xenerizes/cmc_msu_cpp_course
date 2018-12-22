@@ -2,7 +2,8 @@
 #include "IProduct.h"
 
 IProduct::IProduct(const std::string& name, double p) noexcept
-    : _name(name)
+    : _sales(false)
+    , _name(name)
     , _price(p)
 { }
 
@@ -17,6 +18,8 @@ std::string IProduct::GetName() const { return _name; }
 void IProduct::ChangePrice(double p)
 {
     _price = p;
+    if (!_sales) return;
+
     for (auto& shop: _shops) {
         if (!shop.expired()) {
             shop.lock()->ChangePrice(_name, _price);
@@ -26,12 +29,18 @@ void IProduct::ChangePrice(double p)
 
 void IProduct::Attach(IShopPtr p)
 {
+    if (_sales) {
+        p->StartSales(_name, _price);
+    }
+
     _shops.push_back(p);
 }
 
 void IProduct::Detach(IShopPtr p)
 {
-    p->StopSales(_name);
+    if (_sales) {
+        p->StopSales(_name);
+    }
 
     _shops.erase(
         std::remove_if(
@@ -46,6 +55,7 @@ void IProduct::Detach(IShopPtr p)
 
 void IProduct::StartSales()
 {
+    _sales = true;
     for (auto& shop: _shops) {
         if (!shop.expired()) {
             auto p = shop.lock();
@@ -56,6 +66,7 @@ void IProduct::StartSales()
 
 void IProduct::StopSales()
 {
+    _sales = false;
     for (auto& shop: _shops) {
         if (!shop.expired()) {
             shop.lock()->StopSales(_name);
