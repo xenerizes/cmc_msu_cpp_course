@@ -19,7 +19,7 @@ void IProduct::ChangePrice(double p)
     _price = p;
     for (auto& shop: _shops) {
         if (!shop.expired()) {
-            shop.lock()->ChangePrice(_name);
+            shop.lock()->ChangePrice(_name, _price);
         }
     }
 }
@@ -47,7 +47,7 @@ void IProduct::StartSales()
     for (auto& shop: _shops) {
         if (!shop.expired()) {
             auto p = shop.lock();
-            p->StartSales(weak_from_this());
+            p->StartSales(_name, _price);
         }
     }
 }

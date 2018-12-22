@@ -4,20 +4,17 @@
 #include <mutex>
 #include <unordered_map>
 
-struct IProduct;
-using IProductPtr = std::shared_ptr< IProduct >;
-using IProductWeakPtr = std::weak_ptr< IProduct >;
-
 class IShop {
 public:
     explicit IShop(const std::string& name) noexcept;
-    void StartSales(IProductWeakPtr p);
+    void StartSales(const std::string& name, double price);
     void StopSales(std::string name);
-    virtual void ChangePrice(const std::string& name) = 0;
+    virtual void ChangePrice(const std::string& name, double price) = 0;
+    virtual double Buy(const std::string& name) = 0;
 
 protected:
     std::string _name;
-    std::unordered_map< std::string, IProductPtr > _products;
+    std::unordered_map< std::string, double > _products;
 };
 
 using IShopPtr = std::shared_ptr< IShop >;

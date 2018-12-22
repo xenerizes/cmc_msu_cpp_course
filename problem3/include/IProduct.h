@@ -4,9 +4,7 @@
 #include <vector>
 #include "IShop.h"
 
-class IProduct
-    : std::enable_shared_from_this< IProduct >
-{
+class IProduct {
 public:
     IProduct(const std::string& name, double p) noexcept;
     ~IProduct();
