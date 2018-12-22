@@ -9,7 +9,8 @@ include_directories(include)
 add_executable(task1 task1.cpp)
 add_executable(task2
     task2.cpp
-    src/IProduct.cpp)
+    src/IProduct.cpp
+    src/IShop.cpp)
 
 target_link_libraries(task1 pthread) 
 target_link_libraries(task2 pthread gtest)

@@ -1,9 +1,61 @@
+#include <algorithm>
 #include "IProduct.h"
 
-IProduct::IProduct(double p) noexcept
-    : _price(p)
+IProduct::IProduct(const std::string& name, double p) noexcept
+    : _name(name)
+    , _price(p)
 { }
 
-double IProduct::GetPrice() const { return _price; }
+IProduct::~IProduct()
+{
+    StopSales();
+}
 
-void IProduct::ChangePrice(double p) { _price = p; }
+double IProduct::GetPrice() const { return _price; }
+std::string IProduct::GetName() const { return _name; }
+
+void IProduct::ChangePrice(double p)
+{
+    _price = p;
+    for (auto& shop: _shops) {
+        if (!shop.expired()) {
+            shop.lock()->ChangePrice(_name);
+        }
+    }
+}
+
+void IProduct::Attach(IShopPtr p)
+{
+    _shops.push_back(p);
+}
+
+void IProduct::Detach(IShopPtr p)
+{
+    _shops.erase(
+        std::remove_if(
+            _shops.begin(),
+            _shops.end(),
+            [&](const IShopWeakPtr& wp) {
+                return wp.expired() || wp.lock() == p;
+            }
+        ),
+        _shops.end());
+}
+
+void IProduct::StartSales()
+{
+    for (auto& shop: _shops) {
+        if (!shop.expired()) {
+            shop.lock()->StartSales(shared_from_this());
+        }
+    }
+}
+
+void IProduct::StopSales()
+{
+    for (auto& shop: _shops) {
+        if (!shop.expired()) {
+            shop.lock()->StopSales(_name);
+        }
+    }
+}

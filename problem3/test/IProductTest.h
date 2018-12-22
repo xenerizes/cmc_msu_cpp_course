@@ -11,7 +11,7 @@ struct FakeProduct
 };
 
 TEST(IProductTest, PriceTest) {
-    FakeProduct p(100.0);
+    FakeProduct p("fake", 100.0);
 
     ASSERT_DOUBLE_EQ(100.0, p.GetPrice());
 

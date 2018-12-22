@@ -1,12 +1,28 @@
+#pragma once
+
+#include <memory>
+#include <vector>
 #include "IShop.h"
 
-class IProduct {
+class IProduct
+    : std::enable_shared_from_this< IProduct >
+{
 public:
-    IProduct(double p) noexcept;
-    double GetPrice() const;
-    void ChangePrice(double p);
+    IProduct(const std::string& name, double p) noexcept;
+    ~IProduct();
 
-private:
+    double GetPrice() const;
+    std::string GetName() const;
+
+    void Attach(IShopPtr p);
+    void Detach(IShopPtr p);
+    void ChangePrice(double p);
+    void StopSales();
+    void StartSales();
+
+protected:
     double _price;
+    std::string _name;
+    std::vector< IShopWeakPtr > _shops;
 };
 
