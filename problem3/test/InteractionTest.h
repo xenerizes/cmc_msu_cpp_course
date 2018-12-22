@@ -63,10 +63,10 @@ TEST(OneAuchan, ChangePriceTest) {
 
         b.set_value();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
         p1.ChangePrice(42);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
     }, std::ref(p), std::ref(barrier));
 
     auto shop = std::make_shared< Auchan >();
@@ -78,7 +78,7 @@ TEST(OneAuchan, ChangePriceTest) {
     ASSERT_DOUBLE_EQ(58, shop->Buy("condensed_milk"));
     ASSERT_DOUBLE_EQ(1.5, shop->Buy("green_bag"));
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
     ASSERT_DOUBLE_EQ(42, shop->Buy("condensed_milk"));
     ASSERT_DOUBLE_EQ(1.5, shop->Buy("green_bag"));
 
@@ -104,10 +104,10 @@ TEST(OneAuchan, DetachTest) {
 
         b.set_value();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
         p1.Detach(shop);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
     }, std::ref(p), std::ref(barrier));
 
     auto shop = std::make_shared< Auchan >();
@@ -120,7 +120,7 @@ TEST(OneAuchan, DetachTest) {
     ASSERT_DOUBLE_EQ(58, shop->Buy("condensed_milk"));
     ASSERT_DOUBLE_EQ(1.5, shop->Buy("green_bag"));
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
     ASSERT_DOUBLE_EQ(0, shop->Buy("condensed_milk"));
     ASSERT_DOUBLE_EQ(1.5, shop->Buy("green_bag"));
 
