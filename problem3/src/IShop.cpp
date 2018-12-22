@@ -8,9 +8,11 @@ IShop::IShop(const std::string& name) noexcept
     : _name(name)
 { }
 
-void IShop::StartSales(IProductPtr p)
+void IShop::StartSales(IProductWeakPtr p)
 {
-    _products.emplace(p->GetName(), p);
+    if (!p.expired()) {
+        _products.emplace(p.lock()->GetName(), p.lock());
+    }
 }
 
 void IShop::StopSales(std::string name)

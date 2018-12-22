@@ -46,7 +46,8 @@ void IProduct::StartSales()
 {
     for (auto& shop: _shops) {
         if (!shop.expired()) {
-            shop.lock()->StartSales(shared_from_this());
+            auto p = shop.lock();
+            p->StartSales(weak_from_this());
         }
     }
 }

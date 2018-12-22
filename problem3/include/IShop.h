@@ -6,13 +6,14 @@
 
 struct IProduct;
 using IProductPtr = std::shared_ptr< IProduct >;
+using IProductWeakPtr = std::weak_ptr< IProduct >;
 
 class IShop {
 public:
     explicit IShop(const std::string& name) noexcept;
-    void StartSales(IProductPtr p);
+    void StartSales(IProductWeakPtr p);
     void StopSales(std::string name);
-    virtual void ChangePrice(std::string name) = 0;
+    virtual void ChangePrice(const std::string& name) = 0;
 
 protected:
     std::string _name;

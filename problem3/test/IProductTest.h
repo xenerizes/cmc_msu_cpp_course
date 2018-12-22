@@ -1,14 +1,8 @@
 #pragma once
 
-#include <IProduct.h>
+#include "Fakes.h"
 
 namespace test {
-
-struct FakeProduct
-    : public IProduct
-{
-    using IProduct::IProduct;
-};
 
 TEST(IProductTest, PriceTest) {
     FakeProduct p("fake", 100.0);
@@ -18,6 +12,15 @@ TEST(IProductTest, PriceTest) {
     p.ChangePrice(200.0);
 
     ASSERT_DOUBLE_EQ(200.0, p.GetPrice());
+}
+
+TEST(IProductTest, SalesTest) {
+    FakeProduct p("fake", 100);
+    IShopPtr sp = std::make_shared< FakeShopThrowsAtChangePrice >("fake");
+
+    p.Attach(sp);
+    p.StartSales();
+    ASSERT_THROW(p.ChangePrice(300), std::exception);
 }
 
 }
