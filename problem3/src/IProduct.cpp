@@ -31,6 +31,8 @@ void IProduct::Attach(IShopPtr p)
 
 void IProduct::Detach(IShopPtr p)
 {
+    p->StopSales(_name);
+
     _shops.erase(
         std::remove_if(
             _shops.begin(),
