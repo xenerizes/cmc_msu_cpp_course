@@ -20,7 +20,7 @@ struct FakeShopThrowsAtChangePrice
         throw std::exception();
     }
 
-    double Buy(const std::string& name) override { return 0; }
+    double Buy(const std::string& name) const override { return 0; }
 };
 
 struct FakeShopThrowsIfNoProduct
@@ -35,7 +35,7 @@ struct FakeShopThrowsIfNoProduct
         }
     }
 
-    double Buy(const std::string& name) override
+    double Buy(const std::string& name) const override
     {
         auto it = _products.find(name);
         if (it == _products.end()) {

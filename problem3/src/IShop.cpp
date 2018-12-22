@@ -10,10 +10,12 @@ IShop::IShop(const std::string& name) noexcept
 
 void IShop::StartSales(const std::string& name, double price)
 {
+    lock_t lock(_products_mutex);
     _products.emplace(name, price);
 }
 
 void IShop::StopSales(std::string name)
 {
+    lock_t lock(_products_mutex);
     _products.erase(name);
 }
